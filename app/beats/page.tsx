@@ -4,7 +4,7 @@ import React from "react";
 export default function Beatspage() {
   return (
     <div>
-      <p>This is beats page</p>
+      <h1 className="text-center font-extrabold text-3xl">BEAT COLLECTION</h1>
       <BeatCard />
     </div>
   );
