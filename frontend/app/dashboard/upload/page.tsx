@@ -208,7 +208,7 @@ function MyDropzone() {
 export default function UploadPage() {
   return (
     <div className="flex flex-col items-center justify-center bg-white p-4">
-      <h1 className="text-2xl font-semibold mb-4">Upload Your Beat</h1>
+      <h1 className="text-center font-extrabold text-3xl mb-8">BEATS UPLOAD</h1>
       <MyDropzone />
       <Toaster position="top-right" />
     </div>
