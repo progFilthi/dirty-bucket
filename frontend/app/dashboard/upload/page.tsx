@@ -171,7 +171,7 @@ function MyDropzone() {
           type="text"
           name="key"
           placeholder="Key (e.g., C#m)"
-          value={formData.key.toUpperCase()}
+          value={formData.key}
           onChange={handleChange}
           className="border rounded px-3 py-2 text-sm"
           required
