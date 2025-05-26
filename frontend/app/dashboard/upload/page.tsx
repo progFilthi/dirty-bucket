@@ -65,13 +65,16 @@ function MyDropzone() {
       form.append("key", formData.key);
       form.append("bpm", formData.bpm);
       form.append("price", formData.price);
-      form.append("image", imageFile);
+      form.append("cover", imageFile);
       form.append("audio", audioFile);
 
-      const response = await fetch("http://localhost:5000/api/upload", {
-        method: "POST",
-        body: form,
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/upload`,
+        {
+          method: "POST",
+          body: form,
+        }
+      );
 
       toast.dismiss();
 
