@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
 
 interface Beat {
   _id: string;
@@ -81,12 +82,15 @@ export default function BeatCard() {
               <p className="text-xs text-neutral-500 font-medium">
                 {beat.key} • {beat.bpm} BPM
               </p>
-              <button
-                type="button"
-                className="font-base text-sm mt-4 border border-neutral-200 text-neutral-900 rounded-md py-2.5 px-5 transition-colors duration-200 active:scale-95 transform cursor-pointer shadow-sm"
-              >
-                ${beat.price}
-              </button>
+              <div className="flex items-center justify-center space-x-2 relative">
+                <button
+                  type="button"
+                  className="font-base text-sm mt-4 border border-neutral-200 text-neutral-900 rounded-md w-20 h-8 transition-colors duration-200 active:scale-95 transform cursor-pointer shadow-sm"
+                >
+                  ${beat.price}
+                </button>
+                <EllipsisVerticalIcon className="h-5 absolute -right-3 bottom-2 cursor-pointer" />
+              </div>
             </div>
           </div>
         ))}
