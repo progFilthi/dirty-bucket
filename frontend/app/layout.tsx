@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/navigation/Navbar";
 import Container from "@/container/Container";
 import { Toaster } from "react-hot-toast";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,18 +27,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Container>
-          <main suppressHydrationWarning>
-            <Navbar />
-            {children}
-            <Toaster position="top-right" />
-          </main>
-        </Container>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <Container>
+            <main suppressHydrationWarning>
+              <Navbar />
+              {children}
+              <Toaster position="top-right" />
+            </main>
+          </Container>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

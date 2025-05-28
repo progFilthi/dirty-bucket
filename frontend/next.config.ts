@@ -8,6 +8,10 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    serverActions: {},
+  },
+  transpilePackages: ["@clerk/nextjs"],
 };
 
 module.exports = nextConfig;
