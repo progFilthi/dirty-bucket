@@ -91,7 +91,7 @@ export default function BeatCard() {
                   $ {beat.price}
                 </button>
               </div>
-              <EllipsisVerticalIcon className="h-4 absolute top-0 right-3 cursor-pointer" />
+              <EllipsisVerticalIcon className="h-4 absolute top-1 right-3 cursor-pointer" />
             </div>
           </div>
         ))}

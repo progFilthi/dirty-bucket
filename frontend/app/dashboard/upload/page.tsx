@@ -162,16 +162,8 @@ function MyDropzone() {
           type="text"
           name="title"
           placeholder="Title"
+          maxLength={24}
           value={formData.title.toUpperCase()}
-          onChange={handleChange}
-          className="border rounded px-3 py-2 text-sm"
-          required
-        />
-        <input
-          type="text"
-          name="key"
-          placeholder="Key (e.g., C#m)"
-          value={formData.key}
           onChange={handleChange}
           className="border rounded px-3 py-2 text-sm"
           required
@@ -185,6 +177,16 @@ function MyDropzone() {
           className="border rounded px-3 py-2 text-sm"
           required
         />
+        <input
+          type="text"
+          name="key"
+          placeholder="Key (e.g., C#m)"
+          value={formData.key}
+          onChange={handleChange}
+          className="border rounded px-3 py-2 text-sm"
+          required
+        />
+
         <input
           type="number"
           name="price"
