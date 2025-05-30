@@ -1,0 +1,12 @@
+<!-- public/Db-favicons/db-favicon.svg -->
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Circle background -->
+  <circle cx="32" cy="32" r="32" fill="#111827"/> <!-- Change this to #fff or any color -->
+
+  <!-- Bucket outline -->
+  <path d="M20 22h24v24a4 4 0 0 1-4 4H24a4 4 0 0 1-4-4V22Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M20 22a12 5 0 0 0 24 0" stroke="white" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- DB letters -->
+  <text x="32" y="42" text-anchor="middle" font-size="16" fill="white" font-family="sans-serif" font-weight="bold">DB</text>
+</svg>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { metadata } from "./metadata";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navigation/Navbar";
@@ -16,10 +16,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Dirty Bucket",
-  description: "This is a store for selling & showcasing beats",
-};
+export { metadata };
 
 export default function RootLayout({
   children,
