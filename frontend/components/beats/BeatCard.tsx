@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
+import { formatTitle } from "@/utils/formTitles";
 
 interface Beat {
   _id: string;
@@ -57,40 +58,40 @@ export default function BeatCard() {
 
   return (
     <div className="py-12 px-4 max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         {beats.map((beat) => (
           <div
             key={beat._id}
-            className="rounded-2xl p-6 cursor-pointer flex justify-between gap-10 bg-white border border-neutral-300 w-80 h-44 shadow-lg hover:shadow-neutral-200/40 hover:-translate-y-0.5 transition-all duration-300 ease-out"
+            className="rounded-lg flex flex-col justify-between gap-4 bg-white border border-neutral-300 w-56 h-82 shadow-sm hover:shadow-neutral-200/40 hover:-translate-y-0.5 transition-all duration-300 ease-out"
           >
             {/* Cover Image */}
             <div className="flex-shrink-0">
               <Image
                 src={beat.coverUrl}
                 alt={`${beat.title} beat cover`}
-                width={120}
-                height={120}
-                className="w-full aspect-square rounded-xl object-cover"
+                width={100}
+                height={100}
+                className="w-full h-46 object-cover object-top rounded-md"
               />
             </div>
 
             {/* Content */}
-            <div className="flex flex-col justify-center space-y-2 text-center flex-1">
-              <h3 className="font-medium text-base text-neutral-900 tracking-tight leading-tight">
-                {beat.title.toUpperCase()}
+            <div className="flex flex-col justify-center space-y-2 px-4 relative">
+              <h3 className="font-black text-sm text-nowrap overflow-hidden text-ellipsis">
+                {formatTitle(beat.title)}
               </h3>
-              <p className="text-xs text-neutral-500 font-medium">
-                {beat.key} • {beat.bpm} BPM
+              <p className="text-xs text-neutral-500">
+                {beat.key} • {beat.bpm} Bpm
               </p>
               <div className="flex items-center justify-center space-x-2 relative">
                 <button
                   type="button"
-                  className="font-base text-sm mt-4 border border-neutral-200 text-neutral-900 rounded-md w-20 h-8 transition-colors duration-200 active:scale-95 transform cursor-pointer shadow-sm"
+                  className="text-sm my-2 text-white bg-black rounded-md w-full h-8 transition-all duration-300 active:scale-85 transform cursor-pointer shadow-sm"
                 >
-                  ${beat.price}
+                  $ {beat.price}
                 </button>
-                <EllipsisVerticalIcon className="h-5 absolute -right-3 bottom-2 cursor-pointer" />
               </div>
+              <EllipsisVerticalIcon className="h-4 absolute top-0 right-3 cursor-pointer" />
             </div>
           </div>
         ))}
