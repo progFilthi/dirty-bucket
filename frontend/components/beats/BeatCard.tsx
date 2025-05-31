@@ -4,9 +4,19 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
+import { MoreVertical, Play, ShoppingCart, Music } from "lucide-react";
 import { formatTitle } from "@/utils/formTitles";
 import { useCartStore } from "@/store/cartStore";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface Beat {
   _id: string;
@@ -21,6 +31,7 @@ export default function BeatList() {
   const [beats, setBeats] = useState<Beat[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [hoveredBeat, setHoveredBeat] = useState<string | null>(null);
   const addItem = useCartStore((state) => state.addItem);
 
   useEffect(() => {
@@ -55,61 +66,168 @@ export default function BeatList() {
     toast.success(`"${beat.title}" added to cart`);
   };
 
+  const LoadingSkeleton = () => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+      {Array.from({ length: 10 }).map((_, i) => (
+        <Card key={i} className="overflow-hidden">
+          <CardContent className="p-0">
+            <Skeleton className="aspect-square w-full" />
+            <div className="p-4 space-y-3">
+              <Skeleton className="h-4 w-3/4" />
+              <div className="flex gap-2">
+                <Skeleton className="h-5 w-12" />
+                <Skeleton className="h-5 w-16" />
+              </div>
+              <Skeleton className="h-9 w-full" />
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+
   if (loading) {
     return (
-      <div className="py-12 text-center text-neutral-500">Loading beats...</div>
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold tracking-tight mb-2">
+            Browse Beats
+          </h1>
+          <p className="text-muted-foreground">
+            Discover the perfect sound for your next track
+          </p>
+        </div>
+        <LoadingSkeleton />
+      </div>
     );
   }
 
   if (error) {
-    return <div className="py-12 text-center text-red-500">{error}</div>;
+    return (
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <div className="text-center py-16">
+          <Music className="mx-auto h-16 w-16 text-muted-foreground/50 mb-4" />
+          <h2 className="text-2xl font-semibold mb-2">Something went wrong</h2>
+          <p className="text-muted-foreground mb-6">{error}</p>
+          <Button onClick={() => window.location.reload()}>Try Again</Button>
+        </div>
+      </div>
+    );
   }
 
   if (beats.length === 0) {
     return (
-      <div className="py-12 text-center text-neutral-500">
-        No beats uploaded yet.
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <div className="text-center py-16">
+          <Music className="mx-auto h-16 w-16 text-muted-foreground/50 mb-4" />
+          <h2 className="text-2xl font-semibold mb-2">No beats available</h2>
+          <p className="text-muted-foreground">
+            Check back later for new releases
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="py-12 px-4 max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight mb-2">Browse Beats</h1>
+        <p className="text-muted-foreground">
+          {beats.length} {beats.length === 1 ? "beat" : "beats"} available
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
         {beats.map((beat) => (
-          <div
+          <Card
             key={beat._id}
-            className="rounded-lg flex flex-col justify-between gap-4 bg-white border border-neutral-300 w-56 h-82 shadow-sm hover:shadow-neutral-200/40 hover:-translate-y-0.5 transition-all duration-300 ease-out"
+            className="overflow-hidden group hover:shadow-lg transition-all duration-300 border-0 shadow-md flex flex-col h-full"
+            onMouseEnter={() => setHoveredBeat(beat._id)}
+            onMouseLeave={() => setHoveredBeat(null)}
           >
-            <div className="flex-shrink-0">
+            {/* Image Section - Stuck to top */}
+            <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-neutral-100 to-neutral-200 ">
               <Image
                 src={beat.coverUrl}
                 alt={`${beat.title} beat cover`}
-                width={100}
-                height={100}
-                className="w-full h-46 object-cover object-top rounded-md"
+                fill
+                className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, (max-width: 1536px) 25vw, 20vw"
               />
+
+              {/* Overlay with play button */}
+              <div
+                className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity duration-300 ${
+                  hoveredBeat === beat._id ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                <Button
+                  size="icon"
+                  className="h-12 w-12 rounded-full bg-white/90 hover:bg-white text-black hover:text-black shadow-lg"
+                >
+                  <Play className="h-5 w-5 ml-0.5" fill="currentColor" />
+                </Button>
+              </div>
+
+              {/* Dropdown menu */}
+              <div className="absolute top-3 right-3">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 bg-black/20 hover:bg-black/40 text-white border-0"
+                    >
+                      <MoreVertical className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem>Add to Playlist</DropdownMenuItem>
+                    <DropdownMenuItem>Download Preview</DropdownMenuItem>
+                    <DropdownMenuItem>Share Beat</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
 
-            <div className="flex flex-col justify-center space-y-2 px-4 relative">
-              <h3 className="font-black text-sm text-nowrap overflow-hidden text-ellipsis">
-                {formatTitle(beat.title)}
-              </h3>
-              <p className="text-xs text-neutral-500">
-                {beat.key} • {beat.bpm} Bpm
-              </p>
-              <div className="flex items-center justify-center space-x-2 relative">
-                <button
-                  onClick={() => handleAddToCart(beat)}
-                  type="button"
-                  className="text-sm my-2 text-white bg-black rounded-md w-full h-8 transition-all duration-300 active:scale-85 transform cursor-pointer shadow-sm"
-                >
-                  $ {beat.price}
-                </button>
+            {/* Content Section - Flexible space below */}
+            <CardContent className="px-5 flex-1 flex flex-col justify-between">
+              <div className="space-y-3">
+                <div>
+                  <h3 className="font-bold text-lg leading-tight line-clamp-2 group-hover:text-primary transition-colors mb-2">
+                    {formatTitle(beat.title)}
+                  </h3>
+
+                  <div className="flex items-center gap-2">
+                    <Badge
+                      variant="outline"
+                      className="text-xs font-medium border-muted-foreground/30"
+                    >
+                      {beat.key}
+                    </Badge>
+                    <Badge
+                      variant="outline"
+                      className="text-xs font-medium border-muted-foreground/30"
+                    >
+                      {beat.bpm} BPM
+                    </Badge>
+                  </div>
+                </div>
               </div>
-              <EllipsisVerticalIcon className="h-4 absolute top-1 right-3 cursor-pointer" />
-            </div>
-          </div>
+
+              <div className="mt-4 pt-3 border-t border-muted/20">
+                <Button
+                  onClick={() => handleAddToCart(beat)}
+                  className="w-full font-bold group/button h-11"
+                  size="default"
+                >
+                  <ShoppingCart className="h-4 w-4  mr-2 transition-transform group-hover/button:scale-110" />
+                  ${Number(beat.price).toFixed(2)}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </div>
