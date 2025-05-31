@@ -152,7 +152,7 @@ export default function BeatList() {
                 src={beat.coverUrl}
                 alt={`${beat.title} beat cover`}
                 fill
-                className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                className="object-cover object-top transition-transform duration-300 group-hover:scale-105 rounded-sm"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, (max-width: 1536px) 25vw, 20vw"
               />
 
