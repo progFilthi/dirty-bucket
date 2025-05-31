@@ -3,9 +3,11 @@ import { create } from "zustand";
 interface Beat {
   id: string;
   title: string;
-  price: number;
+  price: number | string;
   cover: string;
   audio: string;
+  bpm?: number;
+  key?: string;
   quantity: number;
 }
 

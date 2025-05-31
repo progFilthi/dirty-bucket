@@ -45,9 +45,11 @@ export default function BeatList() {
     addItem({
       id: beat._id,
       title: beat.title,
-      price: beat.price,
+      price: Number(beat.price),
       cover: beat.coverUrl,
       audio: "",
+      bpm: beat.bpm,
+      key: beat.key,
       quantity: 1,
     });
     toast.success(`"${beat.title}" added to cart`);
