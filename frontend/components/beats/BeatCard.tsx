@@ -3,8 +3,10 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
 import { formatTitle } from "@/utils/formTitles";
+import { useCartStore } from "@/store/cartStore";
 
 interface Beat {
   _id: string;
@@ -15,10 +17,11 @@ interface Beat {
   price: number;
 }
 
-export default function BeatCard() {
+export default function BeatList() {
   const [beats, setBeats] = useState<Beat[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const addItem = useCartStore((state) => state.addItem);
 
   useEffect(() => {
     const fetchBeats = async () => {
@@ -37,6 +40,18 @@ export default function BeatCard() {
 
     fetchBeats();
   }, []);
+
+  const handleAddToCart = (beat: Beat) => {
+    addItem({
+      id: beat._id,
+      title: beat.title,
+      price: beat.price,
+      cover: beat.coverUrl,
+      audio: "",
+      quantity: 1,
+    });
+    toast.success(`"${beat.title}" added to cart`);
+  };
 
   if (loading) {
     return (
@@ -64,7 +79,6 @@ export default function BeatCard() {
             key={beat._id}
             className="rounded-lg flex flex-col justify-between gap-4 bg-white border border-neutral-300 w-56 h-82 shadow-sm hover:shadow-neutral-200/40 hover:-translate-y-0.5 transition-all duration-300 ease-out"
           >
-            {/* Cover Image */}
             <div className="flex-shrink-0">
               <Image
                 src={beat.coverUrl}
@@ -75,7 +89,6 @@ export default function BeatCard() {
               />
             </div>
 
-            {/* Content */}
             <div className="flex flex-col justify-center space-y-2 px-4 relative">
               <h3 className="font-black text-sm text-nowrap overflow-hidden text-ellipsis">
                 {formatTitle(beat.title)}
@@ -85,6 +98,7 @@ export default function BeatCard() {
               </p>
               <div className="flex items-center justify-center space-x-2 relative">
                 <button
+                  onClick={() => handleAddToCart(beat)}
                   type="button"
                   className="text-sm my-2 text-white bg-black rounded-md w-full h-8 transition-all duration-300 active:scale-85 transform cursor-pointer shadow-sm"
                 >

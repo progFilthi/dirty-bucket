@@ -4,10 +4,6 @@ import React from "react";
 
 const Navlinks = [
   {
-    label: "Home",
-    href: "/",
-  },
-  {
     label: "Dashboard",
     href: "/dashboard",
   },
@@ -23,8 +19,8 @@ const Navlinks = [
 
 export default function Navbar() {
   return (
-    <header className="fixed top-0 w-full right-0 left-0 py-3 z-50 backdrop-blur-lg shadow-sm rounded-b-lg">
-      <nav className="flex items-center justify-between px-20 gap-8 ">
+    <header className="fixed top-0 w-full right-0 left-0 py-3 z-50 backdrop-blur-lg rounded-b-lg">
+      <nav className="flex items-center justify-between px-20">
         <Link href={"/"}>
           <div className="flex items-center -space-x-2 justify-center">
             <Image
@@ -36,7 +32,7 @@ export default function Navbar() {
             <h1>DirtyBucket</h1>
           </div>
         </Link>
-        <ul className="flex items-center justify-center space-x-16">
+        <ul className="flex items-center justify-center space-x-8">
           {Navlinks.map((link) => (
             <Link href={link.href} key={link.href}>
               <li>{link.label}</li>
