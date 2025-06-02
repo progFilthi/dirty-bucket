@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { MoreVertical, Play, ShoppingCart, Music } from "lucide-react";
+import { MoreVertical, Play, Music } from "lucide-react";
 import { formatTitle } from "@/utils/formTitles";
 import { useCartStore } from "@/store/cartStore";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,6 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 
 interface Beat {
   _id: string;
@@ -69,16 +70,19 @@ export default function BeatList() {
   const LoadingSkeleton = () => (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
       {Array.from({ length: 10 }).map((_, i) => (
-        <Card key={i} className="overflow-hidden">
+        <Card
+          key={i}
+          className="overflow-hidden border-0 bg-neutral-50 dark:bg-neutral-900 rounded-xl"
+        >
           <CardContent className="p-0">
-            <Skeleton className="aspect-square w-full" />
+            <Skeleton className="aspect-square w-full rounded-t-xl" />
             <div className="p-4 space-y-3">
-              <Skeleton className="h-4 w-3/4" />
+              <Skeleton className="h-5 w-3/4 rounded-full" />
               <div className="flex gap-2">
-                <Skeleton className="h-5 w-12" />
-                <Skeleton className="h-5 w-16" />
+                <Skeleton className="h-5 w-40 rounded-full" />
+                <Skeleton className="h-5 w-40 rounded-full" />
               </div>
-              <Skeleton className="h-9 w-full" />
+              <Skeleton className="h-10 w-full rounded-lg" />
             </div>
           </CardContent>
         </Card>
@@ -90,10 +94,10 @@ export default function BeatList() {
     return (
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight mb-2">
+          <h1 className="text-3xl font-bold tracking-tight mb-2 text-neutral-900 dark:text-white">
             Browse Beats
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-neutral-500 dark:text-neutral-400">
             Discover the perfect sound for your next track
           </p>
         </div>
@@ -106,10 +110,17 @@ export default function BeatList() {
     return (
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="text-center py-16">
-          <Music className="mx-auto h-16 w-16 text-muted-foreground/50 mb-4" />
-          <h2 className="text-2xl font-semibold mb-2">Something went wrong</h2>
-          <p className="text-muted-foreground mb-6">{error}</p>
-          <Button onClick={() => window.location.reload()}>Try Again</Button>
+          <Music className="mx-auto h-16 w-16 text-neutral-300 dark:text-neutral-600 mb-4" />
+          <h2 className="text-2xl font-semibold mb-2 text-neutral-900 dark:text-white">
+            Something went wrong
+          </h2>
+          <p className="text-neutral-500 dark:text-neutral-400 mb-6">{error}</p>
+          <Button
+            onClick={() => window.location.reload()}
+            className="bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 dark:text-black text-white rounded-full px-6 py-3 font-medium"
+          >
+            Try Again
+          </Button>
         </div>
       </div>
     );
@@ -119,9 +130,11 @@ export default function BeatList() {
     return (
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="text-center py-16">
-          <Music className="mx-auto h-16 w-16 text-muted-foreground/50 mb-4" />
-          <h2 className="text-2xl font-semibold mb-2">No beats available</h2>
-          <p className="text-muted-foreground">
+          <Music className="mx-auto h-16 w-16 text-neutral-300 dark:text-neutral-600 mb-4" />
+          <h2 className="text-2xl font-semibold mb-2 text-neutral-900 dark:text-white">
+            No beats available
+          </h2>
+          <p className="text-neutral-500 dark:text-neutral-400">
             Check back later for new releases
           </p>
         </div>
@@ -132,8 +145,10 @@ export default function BeatList() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Browse Beats</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-3xl font-bold tracking-tight mb-2 text-neutral-900 dark:text-white">
+          Browse Beats
+        </h1>
+        <p className="text-neutral-500 dark:text-neutral-400">
           {beats.length} {beats.length === 1 ? "beat" : "beats"} available
         </p>
       </div>
@@ -142,73 +157,88 @@ export default function BeatList() {
         {beats.map((beat) => (
           <Card
             key={beat._id}
-            className="overflow-hidden group hover:shadow-lg transition-all duration-300 border-0 shadow-md flex flex-col h-full"
+            className="overflow-hidden hover:shadow-lg transition-all duration-300 border-0 shadow-sm bg-neutral-50 dark:bg-neutral-900 rounded-b-xl flex flex-col h-full w-full -py-2 group"
             onMouseEnter={() => setHoveredBeat(beat._id)}
             onMouseLeave={() => setHoveredBeat(null)}
           >
-            {/* Image Section - Stuck to top */}
-            <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-neutral-100 to-neutral-200 ">
+            {/* Image Section */}
+            <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-700 rounded-b-xl">
               <Image
                 src={beat.coverUrl}
                 alt={`${beat.title} beat cover`}
-                fill
-                className="object-cover object-top transition-transform duration-300 group-hover:scale-105 rounded-sm"
+                width={230}
+                height={230}
+                className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, (max-width: 1536px) 25vw, 20vw"
+                priority={false}
               />
 
-              {/* Overlay with play button */}
+              {/* Play Button Overlay */}
               <div
-                className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity duration-300 ${
+                className={`absolute inset-0 bg-black/30 flex items-center justify-center transition-opacity duration-300 ${
                   hoveredBeat === beat._id ? "opacity-100" : "opacity-0"
                 }`}
               >
                 <Button
                   size="icon"
-                  className="h-12 w-12 rounded-full bg-white/90 hover:bg-white text-black hover:text-black shadow-lg"
+                  className="h-14 w-14 rounded-full bg-white hover:bg-white/90 text-black shadow-lg"
                 >
-                  <Play className="h-5 w-5 ml-0.5" fill="currentColor" />
+                  <Play className="h-5 w-5 ml-1" fill="currentColor" />
                 </Button>
               </div>
 
-              {/* Dropdown menu */}
+              {/* Dropdown menu - subtle and minimal */}
               <div className="absolute top-3 right-3">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 bg-black/20 hover:bg-black/40 text-white border-0"
+                      className="h-8 w-8 bg-black/10 hover:bg-black/20 text-white border-0 backdrop-blur-sm rounded-full"
                     >
                       <MoreVertical className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>Add to Playlist</DropdownMenuItem>
-                    <DropdownMenuItem>Download Preview</DropdownMenuItem>
-                    <DropdownMenuItem>Share Beat</DropdownMenuItem>
+                  <DropdownMenuContent
+                    align="end"
+                    className="rounded-lg shadow-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900"
+                  >
+                    <DropdownMenuItem className="rounded-md focus:bg-neutral-100 dark:focus:bg-neutral-800">
+                      Download Preview
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="rounded-md focus:bg-neutral-100 dark:focus:bg-neutral-800">
+                      Share Beat
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
             </div>
 
-            {/* Content Section - Flexible space below */}
-            <CardContent className="px-5 flex-1 flex flex-col justify-between">
-              <div className="space-y-3">
-                <div>
-                  <h3 className="font-bold text-lg leading-tight line-clamp-2 group-hover:text-primary transition-colors mb-2">
-                    {formatTitle(beat.title)}
-                  </h3>
+            {/* Content Section */}
+            <CardContent className="px-2 flex-1 flex flex-col justify-center">
+              <div className="flex flex-col items-start gap-2">
+                <div className="flex flex-col gap-2 w-full">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-semibold text-lg leading-tight line-clamp-2 text-neutral-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-500 transition-colors">
+                        {formatTitle(beat.title)}
+                      </h3>
+                    </div>
+                    <div>
+                      <p>${Number(beat.price).toFixed(2)}</p>
+                    </div>
+                  </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex justify-start items-start gap-2 mt-2">
                     <Badge
                       variant="outline"
-                      className="text-xs font-medium border-muted-foreground/30"
+                      className="text-xs font-medium border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 rounded-sm px-2.5 py-0.5"
                     >
                       {beat.key}
                     </Badge>
                     <Badge
                       variant="outline"
-                      className="text-xs font-medium border-muted-foreground/30"
+                      className="text-xs font-medium border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 rounded-sm px-2.5 py-0.5"
                     >
                       {beat.bpm} BPM
                     </Badge>
@@ -216,14 +246,14 @@ export default function BeatList() {
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-muted/20">
+              <div className="mt-4 py-4 border-t border-neutral-200 dark:border-neutral-800">
                 <Button
                   onClick={() => handleAddToCart(beat)}
-                  className="w-full font-bold group/button h-11"
+                  className="w-full font-medium h-11 rounded-lg bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 dark:text-black text-white transition-all active:scale-[0.98] cursor-pointer"
                   size="default"
                 >
-                  <ShoppingCart className="h-4 w-4  mr-2 transition-transform group-hover/button:scale-110" />
-                  ${Number(beat.price).toFixed(2)}
+                  <ShoppingBagIcon className="h-4 w-4 mr-2" />
+                  <p>Add To Cart</p>
                 </Button>
               </div>
             </CardContent>
