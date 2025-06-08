@@ -1,3 +1,8 @@
+import {
+  ArrowUpTrayIcon,
+  ChartBarIcon,
+  HomeIcon,
+} from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 interface ChildrenProps {
@@ -11,13 +16,30 @@ export default function layout({ children }: ChildrenProps) {
         <h2 className="text-2xl font-bold mb-4">Admin Panel</h2>
         <ul>
           <li className="flex flex-col gap-2 mt-4 space-y-2">
-            <Link href={"/dashboard"}>Dashboard</Link>
-            <Link href={"/dashboard/upload"}>Upload</Link>
-            <Link href={"/dashboard/analytics"}>Analytics</Link>
+            <Link href={"/dashboard"}>
+              <div className="flex items-center gap-2">
+                <HomeIcon className="h-4" />
+                <p>Dashboard</p>
+              </div>
+            </Link>
+
+            <Link href={"/dashboard/upload"}>
+              <div className="flex items-center gap-2">
+                <ArrowUpTrayIcon className="h-4" />
+                <p>Upload</p>
+              </div>
+            </Link>
+
+            <Link href={"/dashboard/analytics"}>
+              <div className="flex items-center gap-2">
+                <ChartBarIcon className="h-4" />
+                <p>Analytics</p>
+              </div>
+            </Link>
           </li>
         </ul>
       </aside>
-      <main className="mt-24">{children}</main>
+      <main className="mt-32">{children}</main>
     </div>
   );
 }

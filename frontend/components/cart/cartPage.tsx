@@ -24,7 +24,7 @@ export default function CartPage() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container mx-auto px-4 py-8 max-w-4xl mt-32">
         <div className="text-center py-16">
           <ShoppingCartIcon className="mx-auto h-24 w-24 text-muted-foreground/50" />
           <h1 className="text-3xl font-bold tracking-tight mt-6 mb-2">
