@@ -7,8 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
+  const router = useRouter();
+  const backToBeats = () => {
+    router.push("/beats");
+  };
   const cartItems = useCartStore((state) => state.cartItems);
   const removeItem = useCartStore((state) => state.removeItem);
 
@@ -28,7 +33,9 @@ export default function CartPage() {
           <p className="text-muted-foreground mb-8">
             Looks like you haven't added any beats to your cart yet.
           </p>
-          <Button size="lg">Continue Shopping</Button>
+          <Button onClick={backToBeats} size="lg" className="cursor-pointer">
+            Continue Shopping
+          </Button>
         </div>
       </div>
     );
@@ -116,11 +123,14 @@ export default function CartPage() {
                 <span>${totalPrice.toFixed(2)}</span>
               </div>
 
-              <Button className="w-full" size="lg">
+              <Button className="w-full cursor-pointer" size="lg">
                 Proceed to Checkout
               </Button>
-
-              <Button variant="outline" className="w-full">
+              <Button
+                onClick={backToBeats}
+                variant="outline"
+                className="w-full cursor-pointer"
+              >
                 Continue Shopping
               </Button>
             </CardContent>
