@@ -1,7 +1,6 @@
 // app/dashboard/page.tsx
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import UploadPage from "./upload/page";
 
 export default async function DashboardPage() {
   const { userId } = await auth();
@@ -12,7 +11,7 @@ export default async function DashboardPage() {
 
   return (
     <div>
-      <UploadPage />
+      <h1>This is the dashboard page</h1>
     </div>
   );
 }

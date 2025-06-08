@@ -20,7 +20,7 @@ const Navlinks = [
 
 export default function Navbar() {
   return (
-    <header className="fixed top-0 w-full right-0 left-0 py-3 z-50 backdrop-blur-lg rounded-b-lg">
+    <header className="fixed top-0 w-full right-0 left-0 py-3 z-50 backdrop-blur-lg rounded-b-lg shadow-sm">
       <nav className="flex items-center justify-between px-20">
         <Link href={"/"}>
           <div className="flex items-center -space-x-2 justify-between">

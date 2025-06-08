@@ -7,9 +7,11 @@ interface ContainerProps {
 
 export default function Container({ children }: ContainerProps) {
   return (
-    <div className="flex items-center justify-center mt-24">
+    <div>
       <Navbar />
-      {children}
+      <main className="flex items-center justify-center min-h-screen">
+        {children}
+      </main>
     </div>
   );
 }
