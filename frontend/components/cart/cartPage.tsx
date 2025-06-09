@@ -42,7 +42,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="container mx-auto px-4 py-8 max-w-4xl mt-32">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Shopping Cart</h1>
@@ -123,7 +123,35 @@ export default function CartPage() {
                 <span>${totalPrice.toFixed(2)}</span>
               </div>
 
-              <Button className="w-full cursor-pointer" size="lg">
+              <Button
+                className="w-full cursor-pointer"
+                size="lg"
+                onClick={async () => {
+                  try {
+                    const res = await fetch(
+                      "http://localhost:8080/api/payment/checkout",
+                      {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          title: "Beat Cart Order",
+                          price: totalPrice,
+                        }),
+                      }
+                    );
+
+                    const data = await res.json();
+                    if (data.hostedUrl) {
+                      window.open(data.hostedUrl, "_blank");
+                    } else {
+                      alert("Checkout failed.");
+                    }
+                  } catch (err) {
+                    console.error("Checkout error:", err);
+                    alert("Something went wrong during checkout.");
+                  }
+                }}
+              >
                 Proceed to Checkout
               </Button>
               <Button
