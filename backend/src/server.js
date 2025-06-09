@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -19,6 +20,7 @@ app.get("/health", (req, res) => {
 
 // Routes
 app.use("/api", uploadRoutes);
+app.use("/api/payment", paymentRoutes);
 
 // connect to the database and start the server
 connectDB().then(() => {
