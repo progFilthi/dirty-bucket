@@ -1,6 +1,7 @@
 import {
   ArrowUpTrayIcon,
   ChartBarIcon,
+  Cog6ToothIcon,
   HomeIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -34,6 +35,12 @@ export default function layout({ children }: ChildrenProps) {
               <div className="flex items-center gap-2">
                 <ChartBarIcon className="h-4" />
                 <p>Analytics</p>
+              </div>
+            </Link>
+            <Link href={"/dashboard/settings"}>
+              <div className="flex items-center gap-2">
+                <Cog6ToothIcon className="h-4" />
+                <p>Settings</p>
               </div>
             </Link>
           </li>

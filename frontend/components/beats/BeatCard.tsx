@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { MoreVertical, Play, Music } from "lucide-react";
+import { MoreVertical, Music, PauseIcon, PlayIcon } from "lucide-react";
 import { formatTitle } from "@/utils/formTitles";
 import { useCartStore } from "@/store/cartStore";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,17 +18,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { useRef } from "react"; // make sure this is imported at the top
+
+// Inside the component
 
 interface Beat {
   _id: string;
   title: string;
   coverUrl: string;
+  audioUrl: string;
   key: string;
   bpm: number;
   price: number;
 }
 
 export default function BeatList() {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [playingBeatId, setPlayingBeatId] = useState<string | null>(null);
   const [beats, setBeats] = useState<Beat[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -59,7 +65,7 @@ export default function BeatList() {
       title: beat.title,
       price: Number(beat.price),
       cover: beat.coverUrl,
-      audio: "",
+      audio: beat.audioUrl,
       bpm: beat.bpm,
       key: beat.key,
       quantity: 1,
@@ -182,9 +188,33 @@ export default function BeatList() {
                 <Button
                   size="icon"
                   className="h-14 w-14 rounded-full bg-white hover:bg-white/90 text-black shadow-lg"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (playingBeatId === beat._id) {
+                      audioRef.current?.pause();
+                      setPlayingBeatId(null);
+                    } else {
+                      if (audioRef.current) {
+                        audioRef.current.src = beat.audioUrl;
+                        audioRef.current.play();
+                        setPlayingBeatId(beat._id);
+                      }
+                    }
+                  }}
                 >
-                  <Play className="h-5 w-5 ml-1" fill="currentColor" />
+                  {playingBeatId === beat._id ? (
+                    <PauseIcon className="h-5 w-5" fill="currentColor" />
+                  ) : (
+                    <PlayIcon className="h-5 w-5 ml-1" fill="currentColor" />
+                  )}
                 </Button>
+
+                {/* Only one global audio element */}
+                <audio
+                  ref={audioRef}
+                  onEnded={() => setPlayingBeatId(null)}
+                  className="hidden"
+                />
               </div>
 
               {/* Dropdown menu - subtle and minimal */}

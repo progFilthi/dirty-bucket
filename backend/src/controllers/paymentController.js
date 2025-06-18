@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const createCheckoutSession = async (req, res) => {
   const { title, price } = req.body;
+  const roundedPrice = Math.round(price * 100) / 100;
 
   try {
     const response = await axios.post(
@@ -11,9 +12,10 @@ export const createCheckoutSession = async (req, res) => {
         description: `Purchase beat: ${title}`,
         pricing_type: "fixed_price",
         local_price: {
-          amount: price,
+          amount: roundedPrice,
           currency: "USD",
         },
+        //dirtybucket.shop
         redirect_url: "http://localhost:3000/success",
         cancel_url: "http://localhost:3000/cancel",
       },
