@@ -61,7 +61,7 @@ export default function SettingsPage() {
 
   return (
     <div className="p-6 w-full max-w-4xl">
-      <h1 className="text-2xl font-bold mb-6">Settings: Manage Beats</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">Manage Beats</h1>
       <div className="space-y-6">
         {beats.map((beat) => (
           <div
