@@ -1,22 +1,30 @@
 import React from "react";
 
-export default function page() {
+export default function LandingPage() {
   return (
-    <div className="flex items-center justify-center min-h-screen flex-col">
-      <h1 className="text-3xl md:text-4xl lg:text-6xl font-semibold mb-4">
-        Are you tired of overpriced junk?
+    <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 bg-white mt-10">
+      <h1 className="text-4xl md:text-6xl font-extrabold leading-tight max-w-3xl">
+        Are you tired of overpriced junk beats stores?
       </h1>
-      <div className="pb-8 opacity-75">
-        <p className="text-xl text-center">This is your marketplace</p>
-        <p className="text-2xl text-center">And a digital home to sell</p>
-        <p className="text-3xl">Your beats & keep your money!</p>
-      </div>
+
+      <p className="text-lg md:text-xl text-gray-700 mt-6 max-w-xl">
+        DirtyBucket is your digital home for selling beats. Keep your profits.
+        Build your brand. Take back control.
+      </p>
+
+      <p className="text-sm text-gray-500 mt-2">No middlemen. No BS.</p>
+
       <button
         type="button"
-        className="bg-green-500 text-white p-2 w-64 md:w-32 md:rounded-sm rounded-lg cursor-pointer"
+        className="mt-8 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-lg transition shadow-lg cursor-pointer"
       >
-        Try it Out!
+        Upload Your First Beat
       </button>
+
+      {/* Optional: Add trust elements */}
+      <div className="mt-8 text-sm text-gray-400">
+        Trusted by 1,000+ indie producers.
+      </div>
     </div>
   );
 }
