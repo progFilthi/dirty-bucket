@@ -1,8 +1,17 @@
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import s3 from "./s3Client.js";
 
+const sanitizeFileName = (name) => {
+  return name
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w.-]/g, "")
+    .toLowerCase();
+};
+
 export const uploadBufferToS3 = async (file, folder) => {
-  const key = `${folder}${Date.now()}-${file.originalname}`;
+  const safeName = sanitizeFileName(file.originalname); // 👈 Clean it
+  const key = `${folder}${Date.now()}-${safeName}`; // 👈 Use the cleaned name
 
   const params = {
     Bucket: process.env.AWS_BUCKET_NAME,

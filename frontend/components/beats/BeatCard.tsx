@@ -101,7 +101,10 @@ export default function BeatList() {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
     // Play new beat
-    audioRef.current.src = beat.audioUrl;
+    // const debugAudioUrl =
+    audioRef.current.src = encodeURI(beat.audioUrl);
+
+    // console.log(debugAudioUrl);
     try {
       await audioRef.current.play();
       setPlayingBeatId(beat._id);
