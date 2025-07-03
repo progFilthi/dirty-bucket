@@ -10,6 +10,29 @@ interface ChildrenProps {
   children: React.ReactNode;
 }
 
+const Sidebarlinks = [
+  {
+    label: "Dashboard",
+    href: "/dashboard",
+    icon: HomeIcon,
+  },
+  {
+    label: "Upload",
+    href: "/dashboard/upload",
+    icon: ArrowUpTrayIcon,
+  },
+  {
+    label: "Analytics",
+    href: "/dashboard/analytics",
+    icon: ChartBarIcon,
+  },
+  {
+    label: "Settings",
+    href: "/dashboard/settings",
+    icon: Cog6ToothIcon,
+  },
+];
+
 export default function layout({ children }: ChildrenProps) {
   return (
     <div className="flex gap-8">
@@ -17,32 +40,19 @@ export default function layout({ children }: ChildrenProps) {
         <h2 className="text-2xl font-bold mb-4">Admin Panel</h2>
         <ul>
           <li className="flex flex-col gap-2 mt-4 space-y-2">
-            <Link href={"/dashboard"}>
-              <div className="flex items-center gap-2">
-                <HomeIcon className="h-4" />
-                <p>Dashboard</p>
-              </div>
-            </Link>
-
-            <Link href={"/dashboard/upload"}>
-              <div className="flex items-center gap-2">
-                <ArrowUpTrayIcon className="h-4" />
-                <p>Upload</p>
-              </div>
-            </Link>
-
-            <Link href={"/dashboard/analytics"}>
-              <div className="flex items-center gap-2">
-                <ChartBarIcon className="h-4" />
-                <p>Analytics</p>
-              </div>
-            </Link>
-            <Link href={"/dashboard/settings"}>
-              <div className="flex items-center gap-2">
-                <Cog6ToothIcon className="h-4" />
-                <p>Settings</p>
-              </div>
-            </Link>
+            {Sidebarlinks.map((links) => {
+              const Icon = links.icon;
+              return (
+                <Link
+                  href={links.href}
+                  key={links.href}
+                  className="flex items-center py-4 w-full border gap-2 border-yellow-500"
+                >
+                  <Icon className="h-5" />
+                  <span>{links.label}</span>
+                </Link>
+              );
+            })}
           </li>
         </ul>
       </aside>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function LandingPage() {
@@ -14,12 +15,14 @@ export default function LandingPage() {
 
       <p className="text-sm text-gray-500 mt-2">No middlemen. No BS.</p>
 
-      <button
-        type="button"
-        className="mt-8 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-lg transition shadow-lg cursor-pointer"
-      >
-        Upload Your First Beat
-      </button>
+      <Link href={"/dashboard/upload"}>
+        <button
+          type="button"
+          className="mt-8 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-lg transition shadow-lg cursor-pointer"
+        >
+          Upload Your First Beat
+        </button>
+      </Link>
 
       {/* Optional: Add trust elements */}
       <div className="mt-8 text-sm text-gray-400">
